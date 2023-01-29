@@ -5,11 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.DefaultDrive;
+import frc.robot.subsystems.DriveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,16 +21,19 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  public Joystick driverController = new Joystick(Constants.CONTROLE1_ID);
+  public Joystick systemsController = new Joystick(Constants.CONTROLE2_ID);
+  private static DriveSubsystem robotDrive = new DriveSubsystem();
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  double spd = 1;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    
+    robotDrive.setDefaultCommand(new DefaultDrive(robotDrive, driverController));
+    
   }
 
   /**
@@ -36,15 +42,49 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    // CONFIGURAR O QUE CADA BOTÃO FAZ
+    //double[] powers = {0,1};
+    
+    // new JoystickButton(driverController, Constants.BUTTON_Y)
+    //   .whenActive(new RunCommand(() ->{
+    //     robotDrive.setPower(powers);
+    //   }, robotDrive), false);
+
+
+    // new JoystickButton(systemsController, Constants.BUTTON_B)
+    //   .whenPressed(()-> robotShooter.setPower(1))
+    //   .whenReleased(()-> robotShooter.setPower(0));
+
+    // new JoystickButton(systemsController, Constants.BUTTON_A)
+    //   .whenPressed(()-> robotShooter.setPower(0.5))
+    //   .whenReleased(()-> robotShooter.setPower(0));
+    
+    // if(driverController.getPOV() == 90){
+    //   new RunCommand(robotDrive, () ->{
+    //     robotDrive.setPower(powers)
+    //   });
+    //}
+
+    // .whenPressed() para o comando só ser executado com o botão pressionado
+    // .whenActive() para o comando continuar executando mesmo após soltar o botão
+    // TAMBÉM TEM O .while(Active,etc...) TESTAR
+  }
+
+  public Command getAutonomousCommand(){
+    return m_chooser.getSelected();
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }
+  // public Command getAutonomousCommand() {
+  //   // An ExampleCommand will run in autonomous
+  // }
 }
+
+// new DefaultDrive(robotDrive, driverController.getRawAxis(Constants.STICK_X), driverController.getRawAxis(Constants.STICK_Y), driverController.getRawAxis(Constants.LT), driverController.getRawAxis(Constants.RT), driverController.getRawButton(Constants.BUTTON_A), driverController.getRawButton(Constants.BUTTON_B), driverController.getRawButton(Constants.BUTTON_Y))
+
+
