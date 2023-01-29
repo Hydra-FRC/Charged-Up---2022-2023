@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.DefaultDrive;
+import frc.robot.commands.DefaultPneumatic;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.PneumaticSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,8 +24,9 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
   public Joystick driverController = new Joystick(Constants.CONTROLE1_ID);
-  public Joystick systemsController = new Joystick(Constants.CONTROLE2_ID);
+  public Joystick systemController = new Joystick(Constants.CONTROLE2_ID);
   private static DriveSubsystem robotDrive = new DriveSubsystem();
+  private static PneumaticSubsystem robotPneumatic = new PneumaticSubsystem();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   double spd = 1;
 
@@ -33,6 +36,8 @@ public class RobotContainer {
     configureButtonBindings();
     
     robotDrive.setDefaultCommand(new DefaultDrive(robotDrive, driverController));
+
+    robotPneumatic.setDefaultCommand(new DefaultPneumatic(robotPneumatic, systemController));
     
   }
 

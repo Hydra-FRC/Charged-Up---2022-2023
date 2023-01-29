@@ -19,6 +19,9 @@ public final class Constants {
     public static final int MOTOR_LEFT2_ID = 4;
     public static final int MOTOR_SHOOTER = 10;
 
+    public static final int SOLENOID_FOWARD = 14;
+    public static final int SOLENOID_REVERSE = 11;
+
     public static final int CONTROLE1_ID = 0;
     public static final int CONTROLE2_ID = 1;
     public static final int STICK_X = 0;
