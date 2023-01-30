@@ -33,7 +33,7 @@ public class DriveSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
  
-  public void defaultDrive(double leftStickX, double leftStickY,double rightStickX,double rightStickY, double lt, double rt, double spd){
+  public void defaultDrive(double leftStickX, double leftStickY,double rightStickX,double rightStickY, double lt, double rt,double spd){
     m_Driver = new Driver(leftStickX, leftStickY,rightStickX,rightStickY, lt, rt);
     powers = m_Driver.drive();
     powers[0] *= spd;
@@ -75,5 +75,5 @@ public class DriveSubsystem extends SubsystemBase {
     this.motor_left.configNeutralDeadband(0.04);
     this.motor_left.setNeutralMode(NeutralMode.Brake);
     this.motor_right.setNeutralMode(NeutralMode.Brake);
-  } 
+  }
 }

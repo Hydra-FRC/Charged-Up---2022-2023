@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.Driver;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,13 +25,14 @@ public class RobotContainer {
   public Joystick systemsController = new Joystick(Constants.CONTROLE2_ID);
   private static DriveSubsystem robotDrive = new DriveSubsystem();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  JoystickButton lb = new JoystickButton(driverController, 5);
   double spd = 1;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    
+    lb.whileTrue(new RunCommand(() -> robotDrive.setPower(Driver.povCalc(driverController.getPOV()))));
     robotDrive.setDefaultCommand(new DefaultDrive(robotDrive, driverController));
     
   }
@@ -39,13 +40,12 @@ public class RobotContainer {
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link Joystick}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     // CONFIGURAR O QUE CADA BOTÃO FAZ
     //double[] powers = {0,1};
-    
     // new JoystickButton(driverController, Constants.BUTTON_Y)
     //   .whenActive(new RunCommand(() ->{
     //     robotDrive.setPower(powers);

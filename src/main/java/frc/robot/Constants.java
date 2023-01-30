@@ -17,7 +17,8 @@ public final class Constants {
     public static final int MOTOR_LEFT_ID = 3;
     public static final int MOTOR_RIGHT2_ID = 2;
     public static final int MOTOR_LEFT2_ID = 4;
-    public static final int MOTOR_SHOOTER = 10;
+    public static final int MOTOR_TRILHO = 9;
+    public static final int MOTOR_CLAW = 8;
 
     public static final int CONTROLE1_ID = 0;
     public static final int CONTROLE2_ID = 1;
@@ -31,6 +32,10 @@ public final class Constants {
     public static final int BUTTON_B = 2;
     public static final int BUTTON_X = 3;
     public static final int BUTTON_Y = 4;
+
+    public static final double kFastSpd = 1;
+    public static final double kNormalSpd = 0.5;
+    public static final double kSlowSpd = 0.25;
 }
 
 

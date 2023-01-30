@@ -1,5 +1,7 @@
 package frc.robot.utils;
 
+import frc.robot.Constants;
+
 public class Driver {
   public double leftStick_x, leftStick_y, rightStick_x, rightStick_y, rt, lt;
   private double mag_right = 0;
@@ -28,6 +30,7 @@ public class Driver {
     double powers[] = { this.mL, this.mR };
     return powers;
   }
+
 
   public void quadCalc() {
     double x = this.leftStick_x;
@@ -107,6 +110,64 @@ public class Driver {
     this.seno_left = leftStick_y / mag_left;
     this.mag_right = Math.hypot(rightStick_x, rightStick_y);
     this.seno_right = rightStick_y / mag_right;
+  }
+
+  public static double[] povCalc(int pov){
+    double[] power = new double[2];
+
+    switch(pov){
+
+      case 0:
+        power[0] = 1;
+        power[1] = 1;
+        break;
+
+      case 45:
+        power[0] = 0;
+        power[1] = 1;
+        break;
+
+      case 90:
+        power[0] = -1;
+        power[1] = 1;
+        break;
+
+      case 135:
+        power[0] = -1;
+        power[1] = 0;
+        break;
+
+      case 180:
+        power[0] = -1;
+        power[1] = -1;
+        break;
+
+      case 225:
+        power[0] = 0;
+        power[1] = -1;
+        break;
+
+      case 270:
+        power[0] = 1;
+        power[1] = -1;
+        break;
+
+      case 315:
+        power[0] = 1;
+        power[1] = 0;
+        break;
+
+      default:
+        power[0] = 0;
+        power[1] = 0;
+    }
+
+    power[0]*= Constants.kSlowSpd;
+    power[1]*= Constants.kSlowSpd;
+
+    return power;
+
+
   }
 
   private void reverseQuadCalc() {
