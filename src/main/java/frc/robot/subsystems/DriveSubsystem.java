@@ -62,8 +62,8 @@ public class DriveSubsystem extends SubsystemBase {
     
     SmartDashboard.putNumber("mL:",powers[0]);
     SmartDashboard.putNumber("mR:", powers[1]);
-    this.motor_left.set(ControlMode.PercentOutput,powers[0] * t1);
-    this.motor_right.set(ControlMode.PercentOutput,powers[1] * t1);
+    this.motor_left.set(ControlMode.PercentOutput,powers[0]);
+    this.motor_right.set(ControlMode.PercentOutput,powers[1]);
   }
 
   private void init_motors(){
@@ -71,6 +71,7 @@ public class DriveSubsystem extends SubsystemBase {
     this.motor_left2.follow(motor_left);
     this.motor_left.setInverted(true);
     this.motor_right.setInverted(false);
+    this.motor_right2.setInverted(true);
     this.motor_right.configNeutralDeadband(0.04);
     this.motor_left.configNeutralDeadband(0.04);
     this.motor_left.setNeutralMode(NeutralMode.Brake);

@@ -156,7 +156,7 @@ public class Driver {
         power[0] = 1;
         power[1] = 0;
         break;
-
+ 
       default:
         power[0] = 0;
         power[1] = 0;
@@ -170,7 +170,7 @@ public class Driver {
 
   }
 
-  private void reverseQuadCalc() {
+  public void reverseQuadCalc() {
     seno_right = rightStick_y / mag_right;
     // Quadrante 1
     if (rightStick_y >= 0 && rightStick_x >= 0) {

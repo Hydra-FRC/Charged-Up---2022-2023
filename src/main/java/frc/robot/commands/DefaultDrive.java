@@ -9,11 +9,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.utils.Driver;
 
 public class DefaultDrive extends CommandBase {
   private final DriveSubsystem s_drive;
   private Joystick driverController;
-  double left_stickX, left_stickY,right_stickX,right_stickY, lt, rt, spd=1;
+  private double left_stickX, left_stickY,right_stickX,right_stickY, lt, rt, spd=1;
+  private int pov;
 
   public DefaultDrive(DriveSubsystem subsystem,Joystick driverController) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -42,8 +44,12 @@ public class DefaultDrive extends CommandBase {
     this.rt = driverController.getRawAxis(Constants.RT);
     this.right_stickX = driverController.getRawAxis(Constants.RIGHT_STICK_X);
     this.right_stickY = driverController.getRawAxis(Constants.RIGHT_STICK_y);
+    this.pov = driverController.getPOV();
 
-    s_drive.defaultDrive(left_stickX, left_stickY,right_stickX,right_stickY, lt, rt,spd);
+    if(pov == -1)
+      s_drive.defaultDrive(left_stickX, left_stickY,right_stickX,right_stickY, lt, rt,spd);
+    else 
+      s_drive.setPower(Driver.povCalc(pov));
   }
 
   // Called once the command ends or is interrupted.
