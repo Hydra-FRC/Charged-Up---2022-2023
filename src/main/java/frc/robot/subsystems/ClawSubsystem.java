@@ -50,12 +50,12 @@ public class ClawSubsystem extends SubsystemBase {
   
   }
 
-  public void timerActivate(){
+  public void clawActivate(){
     clawIsOpen = true;
     time.start();
   }
 
-  public void timerDesactivate(){
+  public void clawDesactivate(){
     clawIsOpen = false;
     time.stop();
     time.reset();

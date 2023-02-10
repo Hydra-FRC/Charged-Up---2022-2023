@@ -59,8 +59,8 @@ public class RobotContainer {
     //   }, robotDrive), false);
 
     new JoystickButton(systemsController, Constants.BUTTON_Y)
-      .onTrue((Commands.runOnce(() -> claw.timerActivate())))
-      .onFalse(Commands.runOnce(() -> claw.timerDesactivate()));
+      .onTrue((Commands.runOnce(() -> claw.clawActivate())))
+      .onFalse(Commands.runOnce(() -> claw.clawDesactivate()));
     
     new JoystickButton(systemsController, Constants.BUTTON_B)
       .toggleOnTrue(Commands.run(() -> 
