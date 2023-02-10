@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DefaultDrive;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.RailSubsystem;
@@ -29,6 +30,7 @@ public class RobotContainer {
   private static DriveSubsystem robotDrive = new DriveSubsystem();
   private static ClawSubsystem claw = new ClawSubsystem();
   private static RailSubsystem rail = new RailSubsystem();
+  private static ArmSubsystem arm = new ArmSubsystem();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   JoystickButton lb = new JoystickButton(driverController, 5);
   double spd = 1;
@@ -57,13 +59,27 @@ public class RobotContainer {
     //   }, robotDrive), false);
 
     new JoystickButton(systemsController, Constants.BUTTON_Y)
-      .onTrue(Commands.run(() -> claw.openClaw()));
+      .onTrue((Commands.runOnce(() -> claw.timerActivate())))
+      .onFalse(Commands.runOnce(() -> claw.timerDesactivate()));
     
     new JoystickButton(systemsController, Constants.BUTTON_B)
       .toggleOnTrue(Commands.run(() -> 
-      rail.manageRailL(systemsController.getRawAxis(Constants.RT))))
+        rail.manageRailL(systemsController.getRawAxis(Constants.RT))))
       .toggleOnTrue(Commands.run(() -> 
-      rail.manageRailL(systemsController.getRawAxis(Constants.LT))));
+        rail.manageRailR(systemsController.getRawAxis(Constants.LT))));
+
+    new JoystickButton(systemsController, Constants.RB)
+      .whileTrue(Commands.run(() ->{
+        arm.armUp(spd); 
+        arm.up = true;
+      }))
+      .onFalse(Commands.run(() -> arm.up = false));
+    new JoystickButton(systemsController, Constants.LB)
+      .whileTrue(Commands.run(() -> {
+        arm.armDown(spd);
+        arm.down = false;
+      }))
+      .onFalse(Commands.run(() -> arm.down = false));
     
     
     // new JoystickButton(systemsController, Constants.BUTTON_B)
